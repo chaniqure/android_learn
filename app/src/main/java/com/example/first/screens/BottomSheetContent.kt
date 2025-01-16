@@ -8,40 +8,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BottomSheetContent(onDismiss: () -> Unit) {
-    var visible by remember { mutableStateOf(false) }
-    
-    LaunchedEffect(Unit) {
-        visible = true
-    }
-
-    AnimatedVisibility(
-        visible = visible,
-        enter = fadeIn() + slideInVertically(initialOffsetY = { it }),
-        exit = fadeOut() + slideOutVertically(targetOffsetY = { it })
+fun BottomSheetContent(
+    onDismiss: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "底部弹出框",
-                style = MaterialTheme.typography.headlineSmall
-            )
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            Text("这是底部弹出框的内容")
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            Button(
-                onClick = onDismiss,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("关闭")
-            }
+        Text(
+            text = "底部弹出框内容",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Button(onClick = onDismiss) {
+            Text("关闭")
         }
     }
 } 

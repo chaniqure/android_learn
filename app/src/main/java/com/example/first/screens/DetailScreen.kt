@@ -19,64 +19,20 @@ fun DetailScreen(
     itemId: String,
     onBack: () -> Unit
 ) {
-    // 模拟根据ID获取数据
-    val item = remember {
-        Item(
-            itemId,
-            "项目 $itemId",
-            "这是项目 $itemId 的详细描述内容"
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "详情页面 #$itemId",
+            style = MaterialTheme.typography.headlineMedium
         )
-    }
-
-    var visible by remember { mutableStateOf(false) }
-    
-    LaunchedEffect(Unit) {
-        visible = true
-    }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("详情页") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, "返回")
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
-        AnimatedVisibility(
-            visible = visible,
-            enter = slideInHorizontally() + fadeIn(),
-            exit = slideOutHorizontally() + fadeOut()
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp)
-            ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .animateContentSize()
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = item.title,
-                            style = MaterialTheme.typography.headlineSmall
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = item.description,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
-                }
-            }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Button(onClick = onBack) {
+            Text("返回")
         }
     }
 } 

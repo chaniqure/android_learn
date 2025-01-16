@@ -1,6 +1,7 @@
 package com.example.first
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -25,27 +26,30 @@ import com.example.first.ui.theme.FirstTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MainActivity", "onCreate started")
         enableEdgeToEdge()
         setContent {
             FirstTheme {
-                MainApp()
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    MainApp()
+                }
             }
         }
+        Log.d("MainActivity", "onCreate completed")
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainApp() {
-    // 创建导航控制器
+    Log.d("MainApp", "MainApp started")
     val navController = rememberNavController()
-    
-    // 创建底部弹出框状态
-    val bottomSheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
 
     Scaffold(
-        // 底部导航栏
         bottomBar = {
             NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -83,11 +87,7 @@ fun MainApp() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(
-                route = Screen.Home.route,
-                enterTransition = { fadeIn() },
-                exitTransition = { fadeOut() }
-            ) {
+            composable(route = Screen.Home.route) {
                 HomeScreen(
                     onNavigateToDetail = { itemId -> 
                         navController.navigate(Screen.Detail.createRoute(itemId))
@@ -95,13 +95,12 @@ fun MainApp() {
                     onShowBottomSheet = { showBottomSheet = true }
                 )
             }
+            
             composable(
                 route = Screen.Detail.route,
                 arguments = listOf(
                     navArgument("itemId") { type = NavType.StringType }
-                ),
-                enterTransition = { slideInHorizontally() + fadeIn() },
-                exitTransition = { slideOutHorizontally() + fadeOut() }
+                )
             ) { backStackEntry ->
                 val itemId = backStackEntry.arguments?.getString("itemId") ?: ""
                 DetailScreen(
@@ -109,20 +108,15 @@ fun MainApp() {
                     onBack = { navController.popBackStack() }
                 )
             }
-            composable(
-                route = Screen.Profile.route,
-                enterTransition = { fadeIn() },
-                exitTransition = { fadeOut() }
-            ) {
+            
+            composable(route = Screen.Profile.route) {
                 ProfileScreen()
             }
         }
 
-        // 显示底部弹出框
         if (showBottomSheet) {
             ModalBottomSheet(
-                onDismissRequest = { showBottomSheet = false },
-                sheetState = bottomSheetState
+                onDismissRequest = { showBottomSheet = false }
             ) {
                 BottomSheetContent(
                     onDismiss = { showBottomSheet = false }
@@ -130,4 +124,5 @@ fun MainApp() {
             }
         }
     }
+    Log.d("MainApp", "MainApp completed")
 }

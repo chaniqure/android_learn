@@ -14,21 +14,8 @@ fun ProfileScreen() {
             .padding(16.dp)
     ) {
         Text(
-            text = "个人中心",
+            text = "个人页面",
             style = MaterialTheme.typography.headlineMedium
-        )
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        // 示例个人信息项
-        ListItem(
-            headlineContent = { Text("用户名") },
-            supportingContent = { Text("张三") }
-        )
-        
-        ListItem(
-            headlineContent = { Text("邮箱") },
-            supportingContent = { Text("zhangsan@example.com") }
         )
     }
 } 
