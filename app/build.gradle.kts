@@ -52,6 +52,19 @@ dependencies {
     
     // 图片加载库
     implementation("io.coil-kt:coil-compose:2.5.0")
+    
+    // Material 图标扩展
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    
+    // Retrofit for network calls
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    
+    // OkHttp logging
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
