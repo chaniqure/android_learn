@@ -180,66 +180,78 @@ fun DetailScreen(
                     }
                     is DetailUiState.Success -> {
                         val item = (uiState as DetailUiState.Success).item
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
-                        ) {
-                            // 图片区域
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(250.dp)
-                                    .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
-                            ) {
-                                AsyncImage(
-                                    model = item.imageUrl,
-                                    contentDescription = "项目图片",
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Crop,
-                                    placeholder = ColorPainter(MaterialTheme.colorScheme.surfaceVariant),
-                                    error = ColorPainter(MaterialTheme.colorScheme.errorContainer)
-                                )
-                            }
-
-                            // 内容区域
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            ) {
-                                Text(
-                                    text = item.title,
-                                    style = MaterialTheme.typography.headlineMedium
-                                )
-                                
-                                Spacer(modifier = Modifier.height(8.dp))
-                                
-                                Text(
-                                    text = item.description,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
-                                
-                                Spacer(modifier = Modifier.height(16.dp))
-                                
-                                // 标签区域
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                ) {
-                                    SuggestionChip(
-                                        onClick = { /* 标签点击事件 */ },
-                                        label = { Text("文章 #${item.id}") }
-                                    )
-                                    SuggestionChip(
-                                        onClick = { /* 标签点击事件 */ },
-                                        label = { Text("JSONPlaceholder") }
-                                    )
-                                }
-                            }
-                        }
+                        DetailContent(item)
                     }
                 }
+            }
+        }
+    }
+}
+
+/**
+ * 详情页内容区域
+ * 展示项目的图片、标题和描述等详细信息
+ *
+ * @param item 要显示的项目数据
+ */
+@Composable
+private fun DetailContent(item: Item) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp)
+    ) {
+        // 图片区域
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+                .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+        ) {
+            AsyncImage(
+                model = item.imageUrl,
+                contentDescription = "项目图片",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                placeholder = ColorPainter(MaterialTheme.colorScheme.surfaceVariant),
+                error = ColorPainter(MaterialTheme.colorScheme.errorContainer)
+            )
+        }
+
+        // 内容区域
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = item.title,
+                style = MaterialTheme.typography.headlineMedium
+            )
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Text(
+                text = item.description,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // 标签区域
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                SuggestionChip(
+                    onClick = { /* 标签点击事件 */ },
+                    label = { Text("文章 #${item.id}") }
+                )
+                SuggestionChip(
+                    onClick = { /* 标签点击事件 */ },
+                    label = { Text("JSONPlaceholder") }
+                )
             }
         }
     }

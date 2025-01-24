@@ -61,15 +61,11 @@ import com.example.first.viewmodel.HomeUiState
 import com.example.first.viewmodel.HomeViewModel
 
 /**
- * 首页界面
- * 这是应用的主页面，展示项目列表，包含以下功能：
- * 1. 顶部搜索栏
- * 2. 项目列表展示（两列网格布局）
- * 3. 添加新项目
- * 4. 底部操作按钮
+ * 首页主屏幕组件
+ * 展示项目列表和搜索功能
  *
- * @param onNavigateToDetail 导航到详情页的回调
- * @param onShowBottomSheet 显示底部弹出框的回调
+ * @param onNavigateToDetail 导航到详情页的回调函数
+ * @param onShowBottomSheet 显示底部弹窗的回调函数
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -170,31 +166,7 @@ fun HomeScreen(
                                     val successState = uiState as HomeUiState.Success
                                     if (successState.items.isEmpty()) {
                                         // 空状态
-                                        Column(
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                                .padding(16.dp),
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                            verticalArrangement = Arrangement.Center
-                                        ) {
-                                            Icon(
-                                                Icons.Default.List,
-                                                contentDescription = null,
-                                                modifier = Modifier.size(48.dp),
-                                                tint = MaterialTheme.colorScheme.primary
-                                            )
-                                            Spacer(modifier = Modifier.height(16.dp))
-                                            Text(
-                                                text = "暂无项目",
-                                                style = MaterialTheme.typography.titleMedium
-                                            )
-                                            Spacer(modifier = Modifier.height(8.dp))
-                                            Text(
-                                                text = "点击右下角的按钮添加新项目",
-                                                style = MaterialTheme.typography.bodyMedium,
-                                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                                            )
-                                        }
+                                        EmptyState()
                                     } else {
                                         // 项目网格列表
                                         LazyVerticalGrid(
@@ -243,6 +215,39 @@ fun HomeScreen(
                 }
             }
         }
+    }
+}
+
+/**
+ * 空状态展示组件
+ * 当没有项目时显示的提示界面
+ */
+@Composable
+private fun EmptyState() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            Icons.Default.List,
+            contentDescription = null,
+            modifier = Modifier.size(48.dp),
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "暂无项目",
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "点击右下角的按钮添加新项目",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

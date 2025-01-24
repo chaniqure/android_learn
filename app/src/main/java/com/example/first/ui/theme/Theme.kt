@@ -32,6 +32,14 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+/**
+ * 应用程序主题组件
+ * 配置应用的颜色主题、排版和其他主题相关设置
+ *
+ * @param darkTheme 是否使用深色主题，默认跟随系统设置
+ * @param dynamicColor 是否使用动态颜色（Android 12+特性），默认启用
+ * @param content 需要应用主题的内容
+ */
 @Composable
 fun FirstTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
